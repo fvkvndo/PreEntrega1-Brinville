@@ -1,61 +1,75 @@
-let valorEnPesos = prompt("Ingresa el valor en pesos (o ESC para salir):");
+const arrayDeImpuestos = [
+  {
+    id: 1,
+    nombre: 'iva',
+    valor: '21%',
+  },
+  {
+    id: 2,
+    nombre: 'impuesto PAIS',
+    valor: '8%',
+  },
+  {
+    id: 3,
+    nombre: 'impuesto a las ganancias',
+    valor: '45%',
+  },
+  {
+    id: 4,
+    nombre: 'ingresos brutos',
+    valor: '2%',
+  },
+];
 
-while (valorEnPesos !== "ESC") {
-  if (!isNaN(valorEnPesos)) {
-    const arrayDeImpuestos = [
-      {
-        nombre: "IVA",
-        valor: valorEnPesos * 0.21,
-      },
-      {
-        nombre: "Impuesto PAIS",
-        valor: valorEnPesos * 0.08,
-      },
-      {
-        nombre: "Impuesto a las ganancias",
-        valor: valorEnPesos * 0.45,
-      },
-      {
-        nombre: "Ingresos Brutos",
-        valor: valorEnPesos * 0.02,
-      },
-    ];
+function init() {
+  alert('Esto es un simulador de impuestos a las compras digitales');
 
-    const nombres = arrayDeImpuestos.map((el) => el.nombre)
-    console.log(nombres);
+  const comienzo = confirm('Acepte para continuar');
 
-    for (let i = 0; i < arrayDeImpuestos.length; i++) {
-      console.log("=====================");
-      console.log("Nombre: " + arrayDeImpuestos[i].nombre);
-      console.log("Valor: " + arrayDeImpuestos[i].valor);
-    }
-
-    class Impuestos {
-      constructor(iva, impuestoGanancia, impuestoPais, ingresosBrutos) {
-        this.iva = iva;
-        this.impuestoGanancia = impuestoGanancia;
-        this.impuestoPais = impuestoPais;
-        this.ingresosBrutos = ingresosBrutos;
-      }
-    }
-
-    const imp = new Impuestos("21%", "45%", "8%", "2%");
-    console.log("===================");
-    console.log("IVA:", imp.iva);
-    console.log("Impuesto a la ganancia:", imp.impuestoGanancia);
-    console.log("Impuesto país:", imp.impuestoPais);
-    console.log("Ingresos brutos:", imp.ingresosBrutos);
-
-    const calcularImpuesto = () => parseFloat(valorEnPesos) * 0.76;
-    const calcularValorFinal = () => parseFloat(valorEnPesos) + calcularImpuesto();
-
-    let impuesto = calcularImpuesto();
-    let valorFinal = calcularValorFinal();
-    alert("El impuesto a pagar es de: $" + impuesto);
-    alert("El valor final es de: $" + valorFinal);
+  if (comienzo) {
+    mostrarMenu();
   } else {
-    alert("Error: Debes ingresar un valor numérico válido.");
+    return;
   }
-
-  valorEnPesos = prompt("Ingresa otro valor en pesos (o ESC para salir):");
 }
+
+function mostrarMenu() {
+  const eleccionUsuario = parseInt(prompt('¿Qué desea hacer? 1) Calcular impuesto 2)Conocer valores del impuesto 3)Salir'));
+
+  switch(eleccionUsuario){
+  case 1:
+    calcularImpuesto();
+    break;
+  case 2:
+    monstrarImpuestos();
+    break;
+  case 3:
+    return;
+  }
+}
+
+function monstrarImpuestos() {
+  const listado = arrayDeImpuestos.reduce( (acc, el) => acc += `${el.id} - ${el.nombre} - ${el.valor} \n`, "");
+
+  alert('Estos son los valores del impuesto \n' + listado);
+
+  mostrarMenu();
+}
+
+
+
+function calcularImpuesto() {
+  const valorEnPesos = parseInt(prompt("Ingresa el valor en pesos (o ESC para salir):"));
+  
+  const calcularValorImpuesto = parseFloat(valorEnPesos) * 0.76;
+
+  const calcularValorFinal = parseFloat(valorEnPesos) + calcularValorImpuesto;
+
+  alert('El impuesto a pagar es de: ' + calcularValorImpuesto);
+  alert('El total a pagar es de: ' + calcularValorFinal);
+
+  mostrarMenu();
+}
+
+
+init();
