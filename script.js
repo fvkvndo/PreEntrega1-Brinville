@@ -32,6 +32,7 @@ function init() {
   }
 }
 
+
 function solicitarNombre() {
   const nameContainer = document.getElementById('name-container');
   nameContainer.innerHTML = `
@@ -56,6 +57,11 @@ function solicitarNombre() {
 }
 
 function mostrarMenu(name) {
+  if (!name) {
+    const storedName = localStorage.getItem('nombre');
+    name = JSON.parse(storedName);
+  }
+
   const menuContainer = document.getElementById('menu-container');
   menuContainer.innerHTML = `
     <h1>Calculador de Impuestos a las compras digitales</h1>
@@ -75,7 +81,7 @@ function mostrarMenu(name) {
   exitButton.addEventListener('click', exit);
 
   const startButton = document.getElementById('start-button');
-  startButton.style.display = 'none'; // Ocultar el botón "Comenzar"
+  startButton.style.display = 'none'; 
 }
 
 function solicitarValor() {
@@ -134,7 +140,6 @@ function calcularImpuesto() {
     mostrarMenu();
   });
 
-  // Limpiar el contenedor de valor
   const valueContainer = document.getElementById('value-container');
   valueContainer.innerHTML = '';
 }
@@ -142,7 +147,6 @@ function calcularImpuesto() {
 function exit() {
   localStorage.removeItem('nombre');
 
-  // Limpiar los contenedores
   const menuContainer = document.getElementById('menu-container');
   menuContainer.innerHTML = '';
 
@@ -162,6 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const startButton = document.getElementById('start-button');
   startButton.addEventListener('click', () => {
     init();
-    startButton.style.display = 'none'; // Ocultar el botón "Comenzar"
+    startButton.style.display = 'none'; 
   });
 });
